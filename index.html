@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags -->
+  <title>Himan | Creative Developer & Engineer Portfolio</title>
+  <meta name="description" content="A minimal, interactive portfolio website showcasing software contributions, creative coding, and technical developments in an ultra-modern split visual layout.">
+  <meta name="keywords" content="Himan, Developer, Software Engineer, Portfolio, Creative Coding, Obsidian Graph, ASCII Handshake, Neofetch Terminal">
+  <meta name="author" content="Himan">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ==========================================
+       NAVBAR SECTION
+       ========================================== -->
+  <header class="navbar" id="main-navbar">
+    <div class="container nav-container">
+      <a href="#hero" class="nav-logo" id="nav-brand">
+        <span class="nav-logo-dot"></span>
+        Himanshu
+      </a>
+      
+      <div class="nav-controls">
+        <nav class="nav-links" id="navigation-menu">
+          <a href="#about" class="nav-link" id="nav-link-about">Me</a>
+          <a href="#contributions" class="nav-link" id="nav-link-contributions">My Work</a>
+        </nav>
+        
+        <!-- Action Connect Button -->
+        <a href="#connect" class="btn btn-outline" id="nav-btn-connect">Connect</a>
+        
+        <!-- Theme Toggle Button -->
+        <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Light and Dark Mode">
+          <!-- Sun Icon (shown in light mode) -->
+          <svg class="sun" viewBox="0 0 24 24">
+            <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.01c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
+          </svg>
+          <!-- Moon Icon (shown in dark mode) -->
+          <svg class="moon" viewBox="0 0 24 24">
+            <path d="M12.3 22h-.1c-5.5 0-10-4.5-10-10 0-4.8 3.5-8.9 8-9.8.6-.1 1.2.3 1.3.9.1.6-.3 1.2-.9 1.3-3.1.7-5.4 3.5-5.4 6.8 0 3.9 3.2 7.1 7.1 7.1 2.9 0 5.4-1.8 6.4-4.5.2-.5.8-.8 1.4-.6.6.2.9.8.6 1.4-1.5 3.8-5.1 6.3-9.1 6.4z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================
+       HERO SPLIT SECTION
+       ========================================== -->
+  <section class="hero-section" id="hero">
+    <!-- Left Column: Links Menu -->
+    <div class="hero-left">
+      <!-- Interactive Background Canvas (Left-only) -->
+      <canvas id="hero-particles-canvas" class="hero-particles-canvas"></canvas>
+      <div class="hero-left-content">
+        <a href="Himanshu_Kumar_Sah___Resume.pdf" download="Himanshu_Kumar_Sah_Resume.pdf" class="hero-tagline" id="hero-meta-tagline">Download CV ⤓</a>
+        <h1 style="display:none;">Himan - Portfolio</h1> <!-- SEO single H1 -->
+        <div class="hero-titles-container" id="hero-menu-titles">
+          <a href="#about" class="hero-title-link" data-visual="visual-me" id="hero-title-me">Me</a>
+          <a href="#contributions" class="hero-title-link" data-visual="visual-contributions" id="hero-title-contributions">My work</a>
+          <a href="#connect" class="hero-title-link" data-visual="visual-connect" id="hero-title-connect">Connect</a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Right Column: Changing Visualizers -->
+    <div class="hero-right" id="hero-visualizer-panel">
+      
+      <!-- Default Idle Visualizer State -->
+      <div class="visual-default" id="visual-default">
+        <div class="visual-default-content">
+
+          <h3>⟵ Hover on the title texts over there</h3>
+          <p>Activate terminal, graph, or handshake logs by hovering over the menu.</p>
+        </div>
+      </div>
+      
+      <!-- 1. Me (Neofetch) Visualizer -->
+      <div class="visual-card" id="visual-me">
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="terminal-buttons">
+              <span class="terminal-btn btn-red"></span>
+              <span class="terminal-btn btn-yellow"></span>
+              <span class="terminal-btn btn-green"></span>
+            </div>
+            <div class="terminal-title">guest@himan:~</div>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-logo-side" id="term-body-logo"></div>
+            <div class="terminal-content-side">
+              <span class="terminal-prompt" id="term-body-prompt"></span><span class="terminal-cursor"></span>
+              <span id="term-body-stats"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 2. Obsidian Nodes Graph Visualizer -->
+      <div class="visual-card" id="visual-contributions">
+        <div class="canvas-wrapper">
+          <canvas id="obsidian-canvas" class="obsidian-canvas"></canvas>
+          <div class="canvas-tooltip" id="canvas-tooltip" style="opacity: 0;">
+            <div class="canvas-tooltip-type" id="tooltip-type"></div>
+            <div class="canvas-tooltip-title" id="tooltip-title"></div>
+            <div class="canvas-tooltip-desc" id="tooltip-desc"></div>
+          </div>
+        </div>
+      </div>
+      
+
+      <!-- 4. Connect Handshake ASCII Animation -->
+      <div class="visual-card" id="visual-connect">
+        <div class="ascii-container">
+          <div class="ascii-border"></div>
+          <pre class="ascii-content" id="ascii-content"></pre>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- ==========================================
+       START SECTION: About ("Me")
+       ========================================== -->
+  <section class="section-container" id="about">
+    <div class="container">
+      <h2 class="section-title">About Me</h2>
+      <div class="about-grid">
+        <div class="about-details">
+          <h3>A glance into my background.</h3>
+          <p class="about-bio" id="about-bio">
+            <!-- Loaded dynamically from data.js -->
+          </p>
+          <div class="about-meta">
+            <div class="meta-item">
+              <span class="meta-label">Full Name</span>
+              <span class="meta-value" id="meta-name">Himan</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Date of Birth</span>
+              <span class="meta-value" id="meta-dob">2000-01-01</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Current Employment</span>
+              <span class="meta-value" id="meta-emp">Creative Developer</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Uptime</span>
+              <span class="meta-value" id="meta-uptime">9482 hours</span>
+            </div>
+          </div>
+          
+          <div class="skills-wrapper">
+            <h4>Technical Core Skills</h4>
+            <div class="skills-tags" id="skills-tags">
+              <!-- Loaded dynamically -->
+            </div>
+          </div>
+        </div>
+        
+        <!-- About visual layout wrapper -->
+        <div class="about-visual-box">
+          <div class="terminal-window" style="height: 700px;">
+            <div class="terminal-header">
+              <div class="terminal-buttons">
+                <span class="terminal-btn btn-red"></span>
+                <span class="terminal-btn btn-yellow"></span>
+                <span class="terminal-btn btn-green"></span>
+              </div>
+              <div class="terminal-title">guest@himan:~</div>
+            </div>
+            <div class="terminal-body" style="color: #c7d2fe; flex-direction: column; gap: 1.2rem;">
+              <div class="terminal-logo-side" style="color: var(--accent-2);">    _   __
+   / | / /__  ____
+  /  |/ / _ \/ __ \
+ / /|  /  __/ /_/ /
+/_/ |_/\___/\____/
+              </div>
+              <div class="terminal-content-side">
+                <p><span class="terminal-user">guest</span><span class="terminal-host">@himan</span>:~$ cat achievements.log</p>
+                <p style="color: var(--text-secondary); margin-top: 0.5rem;">
+* 1st Place in HackAP Med-Tech Hackathon, Vishakhapatnam (2024)<br>
+* 5th Place in GFG Hacktoberfest 2023 Hackathon<br>
+* 2nd Place in NextGen Club Hackathon (Tripago)<br>
+* Smart India Hackathon (SIH) 2023 National Finalist<br>
+* Track Lead at Open Source Community, VIT-AP (2024 - 2025)<br>
+* Student Coordinator of V.I.K.A.S 2024 (VITAP)<br>
+* Head Student Coordinator of V-Launchpad 2025 (VITAP)<br>
+* Stage Coordinator & FOH Technical Head at TEDxVITAP 2024<br>
+* Certified Red Hat System Administrator (RHCSA)
+                </p>
+                <p style="margin-top: 1rem;"><span class="terminal-user">guest</span><span class="terminal-host">@himan</span>:~$ <span class="terminal-cursor"></span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- END SECTION: About ("Me") -->
+
+  <!-- ==========================================
+       START SECTION: My Contributions
+       ========================================== -->
+  <section class="section-container" id="contributions">
+    <div class="container">
+      <h2 class="section-title">My Work</h2>
+      <div class="contributions-layout">
+        <p class="contributions-intro">
+          Below is a timeline tracking projects I have built, separated by technical engineering and creative design. Hovering nodes in the Obsidian visualizer highlights individual nodes.
+        </p>
+        
+        <div class="contributions-columns">
+          <!-- Left Column: Technical -->
+          <div class="contributions-column">
+            <h3 class="column-title text-gradient">Technical Contributions</h3>
+            <div class="nodes-timeline" id="timeline-tech">
+              <!-- Loaded dynamically from data.js -->
+            </div>
+          </div>
+          
+          <!-- Right Column: Creative -->
+          <div class="contributions-column">
+            <h3 class="column-title text-gradient-creative">Creative Contributions</h3>
+            <div class="nodes-timeline creative-timeline" id="timeline-creative">
+              <!-- Loaded dynamically from data.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- END SECTION: My Contributions -->
+
+
+
+  <!-- ==========================================
+       START SECTION: Connect
+       ========================================== -->
+  <section class="section-container" id="connect">
+    <div class="container">
+      <h2 class="section-title">Let's Connect</h2>
+      <div class="connect-grid">
+        <div class="connect-info">
+          <h3 class="connect-heading">Have a project in mind?</h3>
+          <p class="connect-desc">
+            Whether you want to build a technical system, consult on high-performance web components, or work on a creative installation, feel free to drop a message.
+          </p>
+          
+          <div class="connect-links">
+            <div class="connect-link-item">
+              <div class="connect-icon" aria-hidden="true">✉</div>
+              <div class="connect-text">
+                <h5>Email Address</h5>
+                <p id="email-text">himan@example.com</p>
+              </div>
+            </div>
+            <div class="connect-link-item">
+              <div class="connect-icon" aria-hidden="true">📍</div>
+              <div class="connect-text">
+                <h5>Location</h5>
+                <p id="location-text">New Delhi, India</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="social-links">
+            <a href="https://github.com/HimanshuKumarSah" target="_blank" class="social-ascii-btn" aria-label="GitHub Link">
+              <pre class="ascii-logo">  /\_/\  
+ ( o.o ) 
+  > ^ <  
+  / - \  </pre>
+              <span class="social-label">GitHub</span>
+            </a>
+            <a href="https://www.linkedin.com/in/himanshu-k-sah/git" target="_blank" class="social-ascii-btn" aria-label="LinkedIn Link">
+              <pre class="ascii-logo"> _       
+(_) _ _  
+| || ' \ 
+|_||_|_| </pre>
+              <span class="social-label">LinkedIn</span>
+            </a>
+            <a href="https://www.instagram.com/create.it.himanshu/" target="_blank" class="social-ascii-btn" aria-label="Instagram Link">
+              <pre class="ascii-logo">  ______  
+ |  _ o| 
+ | |_| | 
+ |_____| </pre>
+              <span class="social-label">Instagram</span>
+            </a>
+            <a href="https://www.behance.net/himanshusah" target="_blank" class="social-ascii-btn" aria-label="Behance Link">
+              <pre class="ascii-logo"> ___  ___
+| _ )| __|
+| _ \| _| 
+|___/|___|</pre>
+              <span class="social-label">Behance</span>
+            </a>
+          </div>
+        </div>
+        
+        <div class="connect-form-container">
+          <form action="#" method="POST" id="contact-form">
+            <div class="form-group">
+              <label for="form-name" class="form-label">Full Name</label>
+              <input type="text" id="form-name" class="form-input" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label for="form-email" class="form-label">Email Address</label>
+              <input type="email" id="form-email" class="form-input" placeholder="Your email address" required>
+            </div>
+            <div class="form-group">
+              <label for="form-msg" class="form-label">Message</label>
+              <textarea id="form-msg" class="form-input form-textarea" placeholder="How can I help you?" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;" id="form-submit-btn">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- END SECTION: Connect -->
+
+  <!-- ==========================================
+       FOOTER SECTION
+       ========================================== -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Himanshu. All rights reserved.</p>
+      <p class="footer-credits">Designed with custom layouts & zero external JS framework dependencies.</p>
+    </div>
+  </footer>
+
+  <!-- Web Content Data & Logic Scripts -->
+  <script src="data.js?v=1.0.2"></script>
+  <script src="script.js?v=1.0.2"></script>
+</body>
+</html>
