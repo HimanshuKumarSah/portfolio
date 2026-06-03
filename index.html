@@ -29,10 +29,9 @@
         <nav class="nav-links" id="navigation-menu">
           <a href="#about" class="nav-link" id="nav-link-about">Me</a>
           <a href="#contributions" class="nav-link" id="nav-link-contributions">My Work</a>
+          <!-- Action Connect Button -->
+          <a href="#connect" class="btn btn-outline" id="nav-btn-connect">Connect</a>
         </nav>
-        
-        <!-- Action Connect Button -->
-        <a href="#connect" class="btn btn-outline" id="nav-btn-connect">Connect</a>
         
         <!-- Theme Toggle Button -->
         <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Light and Dark Mode">
@@ -44,6 +43,13 @@
           <svg class="moon" viewBox="0 0 24 24">
             <path d="M12.3 22h-.1c-5.5 0-10-4.5-10-10 0-4.8 3.5-8.9 8-9.8.6-.1 1.2.3 1.3.9.1.6-.3 1.2-.9 1.3-3.1.7-5.4 3.5-5.4 6.8 0 3.9 3.2 7.1 7.1 7.1 2.9 0 5.4-1.8 6.4-4.5.2-.5.8-.8 1.4-.6.6.2.9.8.6 1.4-1.5 3.8-5.1 6.3-9.1 6.4z"/>
           </svg>
+        </button>
+        
+        <!-- Mobile Menu Toggle Button -->
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle Navigation Menu">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
         </button>
       </div>
     </div>
@@ -122,6 +128,9 @@
         </div>
       </div>
       
+      <!-- Mobile CTA Button Container -->
+      <div id="hero-mobile-cta-container" class="hero-mobile-cta-container"></div>
+      
     </div>
   </section>
 
@@ -166,7 +175,7 @@
         
         <!-- About visual layout wrapper -->
         <div class="about-visual-box">
-          <div class="terminal-window" style="height: 700px;">
+          <div class="terminal-window about-terminal">
             <div class="terminal-header">
               <div class="terminal-buttons">
                 <span class="terminal-btn btn-red"></span>

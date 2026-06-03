@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initProjectsFilter();
   setupSmoothScrolling();
   initHeroParticles();
+  initMobileMenu();
+  initIntersectionObserver();
 });
 
 /* 
@@ -158,44 +160,133 @@ function initHeroHover() {
   const titleLinks = document.querySelectorAll('.hero-title-link');
   const visualCards = document.querySelectorAll('.visual-card');
   const defaultVisual = document.getElementById('visual-default');
+  const leftPanel = document.querySelector('.hero-left');
   
+  let isMobile = window.innerWidth <= 992;
+  
+  window.addEventListener('resize', () => {
+    const wasMobile = isMobile;
+    isMobile = window.innerWidth <= 992;
+    
+    if (wasMobile !== isMobile) {
+      if (!isMobile) {
+        // Reset mobile tab styles when going back to desktop
+        titleLinks.forEach(l => l.classList.remove('active-tab'));
+        if (defaultVisual) defaultVisual.style.display = 'flex';
+        visualCards.forEach(c => c.classList.remove('active'));
+        activeVisualId = null;
+        stopAllVisualAnimations();
+      } else {
+        // Going to mobile: Default to the first visual (Me / terminal)
+        activateMobileTab('visual-me');
+      }
+    }
+  });
+
+  function activateMobileTab(visualId) {
+    if (defaultVisual) defaultVisual.style.display = 'none';
+    
+    // Hide all visual cards
+    visualCards.forEach(card => card.classList.remove('active'));
+    
+    // Show targeted visual card
+    const targetCard = document.getElementById(visualId);
+    if (targetCard) {
+      targetCard.classList.add('active');
+      activeVisualId = visualId;
+      triggerVisualAnimation(visualId);
+    }
+    
+    // Update active class on tab links
+    titleLinks.forEach(link => {
+      if (link.getAttribute('data-visual') === visualId) {
+        link.classList.add('active-tab');
+      } else {
+        link.classList.remove('active-tab');
+      }
+    });
+
+    updateMobileCta(visualId);
+  }
+
+  function updateMobileCta(visualId) {
+    const ctaContainer = document.getElementById('hero-mobile-cta-container');
+    if (!ctaContainer) return;
+
+    let text = "Explore My Profile ⟶";
+    let href = "#about";
+    
+    if (visualId === 'visual-me') {
+      text = "Explore My Profile ⟶";
+      href = "#about";
+    } else if (visualId === 'visual-contributions') {
+      text = "Explore My Projects ⟶";
+      href = "#contributions";
+    } else if (visualId === 'visual-connect') {
+      text = "Get in Touch ⟶";
+      href = "#connect";
+    }
+    
+    ctaContainer.innerHTML = `<a href="${href}" class="btn btn-primary hero-mobile-cta-btn">${text}</a>`;
+    
+    // Attach smooth scroll logic to the new button
+    const ctaBtn = ctaContainer.querySelector('a');
+    if (ctaBtn) {
+      ctaBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetSection = document.querySelector(href);
+        if (targetSection) {
+          const navHeight = 70;
+          window.scrollTo({
+            top: targetSection.offsetTop - navHeight,
+            behavior: 'smooth'
+          });
+        }
+      });
+    }
+  }
+
   titleLinks.forEach(link => {
+    // DESKTOP: Hover behavior
     link.addEventListener('mouseenter', () => {
+      if (isMobile) return;
+      
       const visualId = link.getAttribute('data-visual');
-      
-      // Hide default visual
       if (defaultVisual) defaultVisual.style.display = 'none';
-      
-      // Hide all visual cards
       visualCards.forEach(card => card.classList.remove('active'));
       
-      // Show targeted visual card
       const targetCard = document.getElementById(visualId);
       if (targetCard) {
         targetCard.classList.add('active');
         activeVisualId = visualId;
-        
-        // Trigger specific animations on activation
         triggerVisualAnimation(visualId);
       }
     });
     
-    link.addEventListener('mouseleave', () => {
-      // Keep last active or reset to default if moved off container completely.
-      // Handled at container level below for better user experience.
+    // MOBILE: Tab Switch behavior on click
+    link.addEventListener('click', (e) => {
+      if (isMobile) {
+        e.preventDefault(); // Stop default scroll trigger on mobile tab clicks
+        const visualId = link.getAttribute('data-visual');
+        activateMobileTab(visualId);
+      }
     });
   });
   
-  // Clear visual panels if mouse leaves the titles container completely
-  const leftPanel = document.querySelector('.hero-left');
+  // Clear visual panels if mouse leaves the left panel on Desktop
   leftPanel.addEventListener('mouseleave', () => {
+    if (isMobile) return;
+    
     visualCards.forEach(card => card.classList.remove('active'));
     if (defaultVisual) defaultVisual.style.display = 'flex';
     activeVisualId = null;
-    
-    // Stop animations
     stopAllVisualAnimations();
   });
+
+  // Run initial mobile setup if started on mobile width
+  if (isMobile) {
+    activateMobileTab('visual-me');
+  }
 }
 
 function triggerVisualAnimation(id) {
@@ -682,6 +773,11 @@ function setupSmoothScrolling() {
   
   navbarLinks.forEach(link => {
     link.addEventListener('click', function(e) {
+      // On mobile, hero-title-links act as visual switcher tabs, not anchors
+      if (this.classList.contains('hero-title-link') && window.innerWidth <= 992) {
+        return;
+      }
+
       const href = this.getAttribute('href');
       
       if (href && href.startsWith('#')) {
@@ -726,9 +822,10 @@ function initHeroParticles() {
   resizeParticlesCanvas();
   window.addEventListener('resize', resizeParticlesCanvas);
   
-  // Mouse interaction on the left menu pane only
+  // Mouse and Touch interaction on the left menu pane only
   const container = document.querySelector('.hero-left');
   if (container) {
+    // Mouse events
     container.addEventListener('mousemove', (e) => {
       const rect = particlesCanvas.getBoundingClientRect();
       particlesMouse.x = e.clientX - rect.left;
@@ -745,6 +842,29 @@ function initHeroParticles() {
       const clickX = e.clientX - rect.left;
       const clickY = e.clientY - rect.top;
       repulseParticles(clickX, clickY);
+    });
+
+    // Touch events for Mobile
+    container.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        const rect = particlesCanvas.getBoundingClientRect();
+        particlesMouse.x = e.touches[0].clientX - rect.left;
+        particlesMouse.y = e.touches[0].clientY - rect.top;
+        particlesMouse.active = true;
+      }
+    });
+
+    container.addEventListener('touchend', () => {
+      particlesMouse.active = false;
+    });
+
+    container.addEventListener('touchstart', (e) => {
+      if (e.touches.length > 0) {
+        const rect = particlesCanvas.getBoundingClientRect();
+        const clickX = e.touches[0].clientX - rect.left;
+        const clickY = e.touches[0].clientY - rect.top;
+        repulseParticles(clickX, clickY);
+      }
     });
   }
   
@@ -932,5 +1052,75 @@ function animateParticles() {
   });
   
   particlesAnimationId = requestAnimationFrame(animateParticles);
+}
+
+/* 
+   ==========================================================================
+   11. MOBILE DRAWER NAVIGATION MENU HANDLER
+   ========================================================================== 
+*/
+
+function initMobileMenu() {
+  const mobileToggle = document.getElementById('mobile-menu-toggle');
+  const navLinks = document.getElementById('navigation-menu');
+  
+  if (!mobileToggle || !navLinks) return;
+  
+  mobileToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    mobileToggle.classList.toggle('active');
+    navLinks.classList.toggle('active');
+  });
+  
+  // Close menu if links are clicked
+  const links = navLinks.querySelectorAll('a');
+  links.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileToggle.classList.remove('active');
+      navLinks.classList.remove('active');
+    });
+  });
+  
+  // Close menu if user clicks outside the drawer
+  document.addEventListener('click', (e) => {
+    if (navLinks.classList.contains('active')) {
+      const clickInsideMenu = navLinks.contains(e.target);
+      const clickInsideToggle = mobileToggle.contains(e.target);
+      
+      if (!clickInsideMenu && !clickInsideToggle) {
+        mobileToggle.classList.remove('active');
+        navLinks.classList.remove('active');
+      }
+    }
+  });
+}
+
+/* 
+   ==========================================================================
+   12. INTERSECTION OBSERVER FOR RUNTIME PERFORMANCE & BATTERY LIFE
+   ========================================================================== 
+*/
+
+function initIntersectionObserver() {
+  const heroSection = document.getElementById('hero');
+  if (!heroSection) return;
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Resume animations when visible
+        startParticlesAnimation();
+        if (activeVisualId) {
+          triggerVisualAnimation(activeVisualId);
+        }
+      } else {
+        // Pause animations when out of viewport
+        stopParticlesAnimation();
+        stopAllVisualAnimations();
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  observer.observe(heroSection);
 }
 

@@ -1002,6 +1002,10 @@ img {
   width: 100%;
 }
 
+.about-terminal {
+  height: 600px;
+}
+
 /* 2. Contributions Section */
 .contributions-layout {
   display: flex;
@@ -1430,6 +1434,32 @@ img {
   color: var(--text-tertiary);
 }
 
+/* Hamburger Mobile Toggle Button Base Styles */
+.mobile-menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1100; /* Must be above navbar content */
+}
+
+.mobile-menu-toggle:focus {
+  outline: none;
+}
+
+.hamburger-bar {
+  width: 100%;
+  height: 2px;
+  background-color: var(--text-primary);
+  border-radius: 2px;
+  transition: var(--transition-smooth);
+}
+
 /* 
    ==========================================================================
    RESPONSIVE MEDIA QUERIES (MOBILE OPTIMIZATION)
@@ -1437,25 +1467,120 @@ img {
 */
 
 @media (max-width: 992px) {
+  /* Hero Section Mobile Restructure */
   .hero-section {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     height: auto;
+    min-height: calc(100vh - 70px);
     overflow: visible;
   }
   
   .hero-left {
-    padding: 4rem 2rem;
-    height: 60vh;
+    padding: 3rem 1.5rem 1.5rem 1.5rem;
+    height: auto;
+    border-bottom: none;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .hero-left-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .hero-titles-container {
+    flex-direction: row;
     justify-content: center;
-    border-bottom: 1px solid var(--border-color);
+    gap: 1.5rem;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  
+  .hero-titles-container:hover .hero-title-link {
+    opacity: 0.5;
+    filter: none;
+  }
+  
+  .hero-title-link {
+    font-size: clamp(1.4rem, 4vw, 1.8rem) !important;
+    opacity: 0.5;
+    filter: none;
+    transform: none !important;
+    padding: 0.5rem 1rem;
+    border-bottom: 2px solid transparent;
+    transition: var(--transition-fast);
+  }
+  
+  .hero-titles-container .hero-title-link:hover {
+    opacity: 1;
+    transform: none;
+    color: var(--text-primary);
+  }
+  
+  .hero-title-link.active-tab {
+    opacity: 1 !important;
+    filter: none !important;
+    border-bottom: 2px solid var(--accent-1);
+    color: var(--accent-1) !important;
+  }
+  
+  .hero-title-link:nth-child(even).active-tab {
+    border-bottom-color: var(--accent-2);
+    color: var(--accent-2) !important;
   }
   
   .hero-right {
-    height: 40vh;
-    padding: 2rem;
+    height: auto;
+    min-height: 440px;
+    padding: 1.5rem;
     border-left: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: var(--bg-secondary);
   }
   
+  .visual-card {
+    position: relative;
+    width: 100%;
+    height: 360px;
+    display: none;
+    opacity: 0;
+    transform: scale(0.98);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  
+  .visual-card.active {
+    display: flex;
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+  }
+  
+  .visual-default {
+    display: none !important; /* Hide default guide on mobile */
+  }
+  
+  .hero-mobile-cta-container {
+    display: block;
+    width: 100%;
+    margin-top: 1.5rem;
+    text-align: center;
+    z-index: 10;
+  }
+  
+  .hero-mobile-cta-btn {
+    width: 80%;
+    max-width: 300px;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(var(--accent-1-rgb), 0.2);
+  }
+  
+  /* About and Connect Layout Stacking */
   .about-grid {
     grid-template-columns: 1fr;
     gap: 3rem;
@@ -1476,21 +1601,95 @@ img {
     padding: 5rem 0;
   }
   
-  /* Mobile Navigation bar with hamburgers */
+  /* Mobile Navigation Drawer */
+  .mobile-menu-toggle {
+    display: flex;
+  }
+  
   .nav-links {
-    display: none; /* Can be toggled on mobile if needed, or keeping it clean and simple */
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 100vh;
+    background: var(--glass-bg);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-left: 1px solid var(--border-color);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.25);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1050; /* Inside drawer but under toggle if overlay */
+    padding: 2rem;
   }
   
-  .mobile-toggle {
-    display: block;
+  .nav-links.active {
+    transform: translateX(0);
   }
   
-  .hero-title-link {
-    font-size: 2.5rem;
+  .nav-link {
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  
+  /* Navbar spacing */
+  .nav-controls {
+    gap: 1rem;
+  }
+  
+  /* Mobile drawer hamburger active transform */
+  .mobile-menu-toggle.active .hamburger-bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .mobile-menu-toggle.active .hamburger-bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-menu-toggle.active .hamburger-bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+  
+  .about-terminal {
+    height: auto;
+    max-height: 520px;
   }
   
   .connect-form-container {
     padding: 2rem 1.5rem;
+  }
+  
+  .terminal-body {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .terminal-logo-side {
+    font-size: clamp(0.55rem, 2.5vw, 0.75rem);
+  }
+}
+
+@media (max-width: 576px) {
+  /* Social links grid layout */
+  .social-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    overflow-x: visible;
+  }
+  
+  .social-ascii-btn {
+    min-width: unset;
+    width: 100%;
+  }
+  
+  .terminal-window {
+    font-size: 0.8rem;
   }
 }
 
