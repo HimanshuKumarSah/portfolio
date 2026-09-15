@@ -8,6 +8,7 @@ var personalInfo = {
   uptime: "Active since 2022 (B.Tech CSE - Cyber Security)",
   achievements: [
     "RHCSA Certified Linux Administrator (2026)",
+    "ISC2 CC Certified (2026)",
     "Smart India Hackathon (SIH) 2023 National Finalist",
     "Track Lead at Open Source Community, VIT-AP (2024 - 2025)",
     "Stage Technical Coordinator & FOH at TEDxVITAP 2024"
